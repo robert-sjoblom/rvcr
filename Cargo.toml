@@ -30,10 +30,10 @@ base64 = "0.21.0"
 bytes = "1"
 zip = { version = "0.6", optional = true }
 chrono = { version = "0.4", features = ["serde"] }
-http = "0.2"
+http = "1.1"
 lazy_static = "1.4"
-reqwest = { version = "0.11" }
-reqwest-middleware = "0.2.4"
+reqwest = { version = "0.12" }
+reqwest-middleware = { git = "https://github.com/TrueLayer/reqwest-middleware", rev = "cb083ad66e162f880cce20cea0baf75f388c0945"}
 serde = "1"
 serde_json = "1"
 task-local-extensions = "0.1.4"
