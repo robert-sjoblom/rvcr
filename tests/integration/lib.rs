@@ -24,7 +24,7 @@ impl Default for TestScope {
 impl TestScope {
     pub async fn init(self) {
         let mut inited = self.initialized.lock().await;
-        if *inited == false {
+        if !(*inited) {
             if std::env::var("TEST_LOG").is_ok() {
                 let stdout_log = tracing_subscriber::fmt::layer().pretty();
                 tracing_subscriber::registry()

@@ -41,7 +41,7 @@ fn response_modifier(resp: &mut Response) {
 }
 
 fn saved_fixture_path(path: &str) -> PathBuf {
-    let mut bundle = PathBuf::from(std::env::temp_dir());
+    let mut bundle = std::env::temp_dir();
     bundle.push(path);
 
     if bundle.exists() {
@@ -69,7 +69,7 @@ pub async fn test_modifier_request() {
             reqwest::Method::POST,
             format!(
                 "{}{}",
-                crate::ADDRESS.to_string(),
+                *crate::ADDRESS,
                 "/post?access_token=s3cr3t&spam=eggs&secret=s3cr3t",
             ),
         )
@@ -88,7 +88,7 @@ pub async fn test_modifier_request() {
     assert_eq!(
         format!(
             "{}/post?access_token=__ACCESS_TOKEN__&spam=eggs&secret=__SECRET__",
-            crate::ADDRESS.to_string()
+            *crate::ADDRESS
         ),
         recorded_url,
     )
@@ -110,7 +110,7 @@ pub async fn test_modifier_response() {
     vcr_client
         .request(
             reqwest::Method::POST,
-            format!("{}{}", crate::ADDRESS.to_string(), "/post",),
+            format!("{}{}", *crate::ADDRESS, "/post",),
         )
         .send()
         .await
