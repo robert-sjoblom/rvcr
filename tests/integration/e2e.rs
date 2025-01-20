@@ -13,24 +13,18 @@ async fn send_and_compare(
     vcr_client: ClientWithMiddleware,
     real_client: reqwest::Client,
 ) {
-    let mut req1 = vcr_client.request(
-        method.clone(),
-        format!("{}{}", crate::ADDRESS.to_string(), path),
-    );
+    let mut req1 = vcr_client.request(method.clone(), format!("{}{}", *crate::ADDRESS, path));
 
-    let mut req2 = real_client.request(method, format!("{}{}", crate::ADDRESS.to_string(), path));
+    let mut req2 = real_client.request(method, format!("{}{}", *crate::ADDRESS, path));
 
     for (header_name, header_value) in headers {
         req1 = req1.header(header_name.clone(), header_value);
         req2 = req2.header(header_name, header_value);
     }
 
-    match body {
-        Some(text) => {
-            req1 = req1.body(text.to_string());
-            req2 = req2.body(text.to_string());
-        }
-        None => (),
+    if let Some(text) = body {
+        req1 = req1.body(text.to_string());
+        req2 = req2.body(text.to_string());
     }
 
     let req1 = req1.build().unwrap();
@@ -39,8 +33,8 @@ async fn send_and_compare(
     let vcr_response = vcr_client.execute(req1).await.unwrap();
     let real_response = reqwest::Client::new().execute(req2).await.unwrap();
 
-    let vcr_status = vcr_response.status().clone();
-    let real_status = real_response.status().clone();
+    let vcr_status = vcr_response.status();
+    let real_status = real_response.status();
 
     let mut vcr_headers = vcr_response.headers().clone();
     let mut real_headers = real_response.headers().clone();
@@ -117,10 +111,8 @@ async fn test_rvcr_failed_debug() {
         .with(middleware)
         .build();
 
-    let mut unmatched_req = vcr_client.request(
-        reqwest::Method::POST,
-        format!("{}/post", crate::ADDRESS.to_string()),
-    );
+    let mut unmatched_req =
+        vcr_client.request(reqwest::Method::POST, format!("{}/post", *crate::ADDRESS));
 
     unmatched_req = unmatched_req.header(ACCEPT, "text/html");
     unmatched_req = unmatched_req.body("Something different".to_string());
@@ -200,7 +192,7 @@ async fn test_rvcr_replay_search_all() {
     let req1 = vcr_client
         .request(
             reqwest::Method::POST,
-            format!("{}{}", crate::ADDRESS.to_string(), "/post"),
+            format!("{}{}", *crate::ADDRESS, "/post"),
         )
         .send()
         .await
@@ -213,7 +205,7 @@ async fn test_rvcr_replay_search_all() {
     let req2 = vcr_client
         .request(
             reqwest::Method::POST,
-            format!("{}{}", crate::ADDRESS.to_string(), "/post"),
+            format!("{}{}", *crate::ADDRESS, "/post"),
         )
         .send()
         .await
@@ -275,7 +267,7 @@ async fn test_rvcr_replay_skip_found() {
     let req1 = vcr_client
         .request(
             reqwest::Method::POST,
-            format!("{}{}", crate::ADDRESS.to_string(), "/post"),
+            format!("{}{}", *crate::ADDRESS, "/post"),
         )
         .send()
         .await
@@ -286,7 +278,7 @@ async fn test_rvcr_replay_skip_found() {
     let req2 = vcr_client
         .request(
             reqwest::Method::POST,
-            format!("{}{}", crate::ADDRESS.to_string(), "/post"),
+            format!("{}{}", *crate::ADDRESS, "/post"),
         )
         .send()
         .await

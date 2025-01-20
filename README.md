@@ -1,6 +1,10 @@
 rvcr
 ====
 
+# This is a maintained fork of rvcr
+
+## I don't know if the original project/maintainer is around, and I got tired waiting for anything to happen. I'll try and keep it updated.
+
 [![crates.io](https://img.shields.io/crates/v/rvcr.svg)](https://crates.io/crates/rvcr)
 
 Record-and-replay testing middleware for `reqwest` http client.
