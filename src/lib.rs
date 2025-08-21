@@ -30,18 +30,18 @@
 use std::io::Read;
 #[cfg(feature = "compress")]
 use std::io::Write;
+use std::sync::LazyLock;
 use std::{fs, path::PathBuf, str::FromStr, sync::Mutex};
 
-use base64::{engine::general_purpose, Engine};
+use base64::{Engine, engine::general_purpose};
 use reqwest_middleware::Middleware;
 use vcr_cassette::{HttpInteraction, RecorderId};
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-lazy_static::lazy_static! {
-    static ref RECORDER: RecorderId = format!("rVCR {VERSION}");
-    static ref BASE64: String = String::from("base64");
-}
+static RECORDER: LazyLock<RecorderId> =
+    LazyLock::new(|| format!("rVCR {}", env!("CARGO_PKG_VERSION")));
+static BASE64: LazyLock<String> = LazyLock::new(|| String::from("base64"));
 
 /// Pluggable VCR middleware for record-and-replay for reqwest items
 pub struct VCRMiddleware {
