@@ -12,26 +12,26 @@
           "message": "OK"
         },
         "headers": {
-          "server": [
-            "gunicorn/19.9.0"
-          ],
           "content-length": [
             "170"
           ],
-          "connection": [
-            "keep-alive"
+          "access-control-allow-credentials": [
+            "true"
           ],
           "access-control-allow-origin": [
             "*"
           ],
-          "access-control-allow-credentials": [
-            "true"
+          "connection": [
+            "keep-alive"
           ],
           "content-type": [
             "application/json"
           ],
           "date": [
             "Sun, 30 Apr 2023 02:58:45 GMT"
+          ],
+          "server": [
+            "gunicorn/19.9.0"
           ]
         }
       },
@@ -62,26 +62,26 @@
           "message": "OK"
         },
         "headers": {
+          "server": [
+            "gunicorn/19.9.0"
+          ],
+          "access-control-allow-origin": [
+            "*"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "content-length": [
+            "267"
+          ],
+          "date": [
+            "Sun, 30 Apr 2023 02:58:45 GMT"
+          ],
           "content-type": [
             "application/json"
           ],
           "access-control-allow-credentials": [
             "true"
-          ],
-          "date": [
-            "Sun, 30 Apr 2023 02:58:45 GMT"
-          ],
-          "server": [
-            "gunicorn/19.9.0"
-          ],
-          "connection": [
-            "keep-alive"
-          ],
-          "access-control-allow-origin": [
-            "*"
-          ],
-          "content-length": [
-            "267"
           ]
         }
       },
@@ -112,11 +112,14 @@
           "message": "OK"
         },
         "headers": {
-          "access-control-allow-credentials": [
-            "true"
+          "content-type": [
+            "application/json"
           ],
           "server": [
             "gunicorn/19.9.0"
+          ],
+          "connection": [
+            "keep-alive"
           ],
           "access-control-allow-origin": [
             "*"
@@ -124,14 +127,11 @@
           "content-length": [
             "267"
           ],
-          "content-type": [
-            "application/json"
-          ],
-          "connection": [
-            "keep-alive"
-          ],
           "date": [
             "Sun, 30 Apr 2023 02:58:45 GMT"
+          ],
+          "access-control-allow-credentials": [
+            "true"
           ]
         }
       },

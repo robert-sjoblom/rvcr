@@ -1,8 +1,8 @@
-use std::sync::Arc;
+use std::sync::{Arc, LazyLock};
 
 use tokio::sync::Mutex;
 use tracing_subscriber::{
-    filter, prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt, Layer,
+    Layer, filter, prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt,
 };
 
 mod e2e;
@@ -40,7 +40,5 @@ impl TestScope {
     }
 }
 
-lazy_static::lazy_static! {
-    static ref SCOPE: TestScope = TestScope::default();
-    static ref ADDRESS: String = String::from("http://127.0.0.1:38282");
-}
+static SCOPE: LazyLock<TestScope> = LazyLock::new(TestScope::default);
+static ADDRESS: LazyLock<String> = LazyLock::new(|| String::from("http://127.0.0.1:38282"));
