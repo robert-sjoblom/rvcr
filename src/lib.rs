@@ -305,17 +305,17 @@ impl VCRMiddleware {
                         let got =
                             self.header_values_to_string(req.headers.get(recorded_header_name));
                         if expected != got {
-                            diff.push_str(&format!("    {}:\n", recorded_header_name));
-                            diff.push_str(&format!("      recorded: \"{}\"\n", expected));
-                            diff.push_str(&format!("      got:      \"{}\"\n", got));
+                            diff.push_str(&format!("    {recorded_header_name}:\n",));
+                            diff.push_str(&format!("      recorded: \"{expected}\"\n",));
+                            diff.push_str(&format!("      got:      \"{got}\"\n",));
                         }
                     }
                     for (got_header_name, got_header_values) in &req.headers {
                         if !interaction.request.headers.contains_key(got_header_name) {
                             let got = self.header_values_to_string(Some(got_header_values));
-                            diff.push_str(&format!("    {}:\n", got_header_name));
+                            diff.push_str(&format!("    {got_header_name}:\n",));
                             diff.push_str("      recorded: <MISSING>\n");
-                            diff.push_str(&format!("      got:      \"{}\"\n", got));
+                            diff.push_str(&format!("      got:      \"{got}\"\n",));
                         }
                     }
                 }
